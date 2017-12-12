@@ -6,23 +6,28 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:32:17 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/11 17:40:03 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/12 17:31:47 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_uchar		ft_get_red(intmax_t	c)
+t_uchar		ft_get_alpha(intmax_t c)
+{
+	return (c / 16777216 % 256);
+}
+
+t_uchar		ft_get_red(intmax_t c)
 {
 	return (c / 65536 % 256);
 }
 
-t_uchar		ft_get_green(intmax_t	c)
+t_uchar		ft_get_green(intmax_t c)
 {
 	return (c / 256 % 256);
 }
 
-t_uchar		ft_get_blue(intmax_t	c)
+t_uchar		ft_get_blue(intmax_t c)
 {
 	return (c % 256);
 }

@@ -6,7 +6,7 @@
 #    By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/10 17:05:19 by pgritsen          #+#    #+#              #
-#    Updated: 2017/12/11 17:36:51 by pgritsen         ###   ########.fr        #
+#    Updated: 2017/12/12 13:35:36 by pgritsen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS		=	-Wextra -Werror -Wall
 
 HDRS		=	fdf.h
 
-SRCS		=	main.c color_helper.c
+SRCS		=	main.c color_helper.c point_helper.c
 
 OBJDIR		=	obj
 
