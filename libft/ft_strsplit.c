@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 20:24:49 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/11/10 20:58:41 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/13 15:42:28 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char			**ft_strsplit(char const *s, char c)
 	while (s_c-- > 0)
 	{
 		p_s = ft_strntrim(p_s, c);
-		w_l = ft_strnlen(p_s, c);
+		w_l = ft_strclen(p_s, c);
 		if (!(list[it] = (char *)malloc(sizeof(char) * (w_l + 1))))
 			return (clean_list(list));
 		*list[it] = 0;

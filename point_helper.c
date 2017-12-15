@@ -6,29 +6,85 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 13:28:19 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/12 13:41:19 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/15 17:30:26 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_point		ft_xyztoxy(t_point p)
+t_point		ft_xyztoxy(t_point p, t_env env)
 {
 	t_env	rot;
 	t_point	p0;
 	t_point	p1;
 	t_point	p2;
 
-	rot.rx = ft_degtorad(g_env.rx);
-	rot.ry = ft_degtorad(g_env.ry);
-	rot.rz = ft_degtorad(g_env.rz);
+	rot.rx = ft_degtorad(env.rx);
+	rot.ry = ft_degtorad(env.ry);
+	rot.rz = ft_degtorad(env.rz);
+	p.z = round(p.z * (env.scale + 2.0));
 	p0.x = p.x;
 	p0.y = p.y * cos(rot.rx) + p.z * sin(rot.rx);
 	p0.z = p.z * cos(rot.rx) - p.y * sin(rot.rx);
 	p1.x = p0.x * cos(rot.ry) - p0.z * sin(rot.ry);
 	p1.y = p0.y;
 	p1.z = p0.z * cos(rot.ry) + p0.x * sin(rot.ry);
-	p2.x = p1.x * cos(rot.rz) + p1.y * sin(rot.rz) + g_env.pivot_x;
-	p2.y = p1.y * cos(rot.rz) - p1.x * sin(rot.rz) + g_env.pivot_y;
+	p2.x = p1.x * cos(rot.rz) + p1.y * sin(rot.rz) + env.pivot_x;
+	p2.y = p1.y * cos(rot.rz) - p1.x * sin(rot.rz) + env.pivot_y;
+	p2.z = p1.z;
 	return (p2);
+}
+
+void		ft_recalc_points(t_object *object, t_env env)
+{
+	int		xy[2];
+	int		it[2];
+
+	xy[1] = (object->rows / 2) * (-10 * env.scale);
+	it[0] = -1;
+	while (object->p[++it[0]] && (it[1] = -1))
+	{
+		xy[0] = (object->cols / 2 + 1) * (-10 * env.scale);
+		while (object->p[it[0]][++it[1]].color != -1)
+		{
+			object->p[it[0]][it[1]].x = (xy[0] += (10 * env.scale));
+			object->p[it[0]][it[1]].y = xy[1];
+		}
+		xy[1] += (10 * env.scale);
+	}
+}
+
+void		ft_recalc_squads(t_object o)
+{
+	int		it[2];
+	t_squad	*tmp;
+
+	tmp = o.squads;
+	it[0] = -1;
+	while (o.p[++it[0]] && (it[1] = -1))
+		while (o.p[it[0]][++it[1]].color != -1)
+			if (o.p[it[0]][it[1] + 1].color != -1 && o.p[it[0] + 1])
+			{
+				tmp->a = o.p[it[0]][it[1]];
+				tmp->b = o.p[it[0]][it[1] + 1];
+				tmp->c = o.p[it[0] + 1][it[1] + 1];
+				tmp->d = o.p[it[0] + 1][it[1]];
+				tmp = tmp->next;
+			}
+}
+
+intmax_t	ft_clalc_height_color(double z)
+{
+	z > 0 ? z = z / 100.0 + 0.5 : 0;
+	z < 0 ? z = z / 100.0 - 0.5 : 0;
+	z > 1 ? z = 1 : 0;
+	z < -1 ? z = -1 : 0;
+	if (z < 0)
+		return (ft_g_color(0x00FF00, 0x0000FF, ABS(z)));
+	return (ft_g_color(0x00FF00, 0xFF0000, z));
+}
+
+double		ft_p_distance(t_point p1, t_point p2)
+{
+	return (sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2)));
 }

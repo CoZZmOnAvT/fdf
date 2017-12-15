@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 18:32:18 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/10 14:57:05 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/13 14:57:17 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,69 +33,76 @@ t_list		*ft_find_file(t_list **files, const int fd)
 			return (*files);
 		files = &(*files)->next;
 	}
-	ft_lstadd(files, ft_lstnew(ft_strnew(0), 0));
+	ft_lstadd(files, ft_lstnew(NULL, 0));
 	(*files)->content_size = fd;
 	return (*files);
 }
 
-static int	sync_buff(t_list *files, const int fd, char **line)
+static int	sync_buff(t_list *file, char **line)
 {
 	long			n_l_pos;
 
-	while (files)
+	if ((n_l_pos = n_l_found(file->content)) != -1)
 	{
-		if ((int)files->content_size == fd)
-		{
-			if ((n_l_pos = n_l_found(files->content)) != -1)
-			{
-				if (!(*line = ft_strsub(files->content, 0, n_l_pos)))
-					return (-1);
-				ft_strshift(files->content, n_l_pos + 1);
-				return (1);
-			}
-			else if (!(*line = ft_strdup(files->content)))
-				return (-1);
-			ft_memdel(&files->content);
-			return (0);
-		}
-		files = files->next;
+		if (!(*line = ft_strsub(file->content, 0, n_l_pos)))
+			return (-1);
+		ft_strshift(file->content, n_l_pos + 1);
+		return (1);
 	}
-	*line = ft_strnew(0);
+	else if (file->content)
+	{
+		if (!(*line = ft_strdup(file->content)))
+			return (-1);
+		ft_memdel(&file->content);
+	}
 	return (0);
 }
 
-static int	cut_to_n_l(char *str, char *trash, long n_l_pos, char **line)
+static int	cut_to_n_l(t_list *file, char **line, char *buff, long bytes)
 {
-	if (!(*line = ft_strnjoin(trash, str, '\n')))
-		return (-1);
-	ft_memdel((void **)&trash);
-	ft_strshift(str, n_l_pos + 1);
-	return (1);
+	long	n_l_pos;
+	char	*tmp;
+
+	tmp = *line;
+	buff[bytes] = 0;
+	if ((n_l_pos = n_l_found(buff)) != -1)
+	{
+		if (!(*line = ft_strnjoin(tmp, buff, '\n')))
+			return (-1);
+		ft_memdel((void **)&tmp);
+		ft_strshift(buff, n_l_pos + 1);
+		if (ft_strlen(buff))
+			file->content = ft_strdup(buff);
+		return (1);
+	}
+	if (*line)
+	{
+		*line = ft_strjoin(*line, buff);
+		ft_memdel((void **)&tmp);
+	}
+	else
+		*line = ft_strdup(buff);
+	return (0);
 }
 
 int			ft_get_next_line(const int fd, char **line)
 {
-	char			*buff;
-	char			*tmp;
+	char			buff[BUFF_SIZE + 1];
 	static t_list	*files;
 	t_list			*tmp_f;
-	long			n_l_pos;
+	long			bytes;
+	int				tmp;
 
-	if (!line)
+	if (!line || fd < 0)
 		return (-1);
+	*line = NULL;
 	tmp_f = ft_find_file(&files, fd);
-	if ((n_l_pos = sync_buff(tmp_f, fd, line)))
-		return (n_l_pos);
-	if (!(buff = (char *)malloc(sizeof(char) * (BUFF_SIZE + 1))))
-		return (-1);
-	while (read(fd, buff, BUFF_SIZE))
-	{
-		tmp_f->content = ft_strdup(buff);
-		tmp = *line;
-		if ((n_l_pos = n_l_found(tmp_f->content)) != -1)
-			return (cut_to_n_l(tmp_f->content, tmp, n_l_pos, line));
-		*line = ft_strjoin(*line, buff);
-		ft_memdel((void **)&tmp);
-	}
-	return (0);
+	if ((bytes = sync_buff(tmp_f, line)))
+		return (bytes);
+	while ((bytes = read(fd, buff, BUFF_SIZE)))
+		if (bytes == -1)
+			return (-1);
+		else if ((tmp = cut_to_n_l(tmp_f, line, buff, bytes)))
+			return (tmp);
+	return ((*line && **line) ? 1 : 0);
 }
