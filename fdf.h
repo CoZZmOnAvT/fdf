@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:59:53 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/15 17:37:30 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/15 22:41:35 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,8 @@ t_uchar			ft_get_green(intmax_t c);
 t_uchar			ft_get_blue(intmax_t c);
 
 t_point			ft_xyztoxy(t_point p, t_env env);
+
+double			ft_coef_point(double a, double b, double t);
 
 double			ft_p_distance(t_point p1, t_point p2);
 

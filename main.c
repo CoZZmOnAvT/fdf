@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:53:29 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/15 20:16:48 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/15 22:45:42 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		main(int ac, char **av)
 	static t_env	env;
 	t_rash			trash;
 
-	env = (t_env){.width = W_WIDTH, .height = W_HEIGHT, .rx = 45, .ry = 45,
+	env = (t_env){.width = W_WIDTH, .height = W_HEIGHT, .rx = -45, .ry = 45,
 		.rz = 0, .pivot_x = DEFAULT_CENTER, .pivot_y = DEFAULT_CENTER,
 		.scale = 3, .wf_color = 0xFFFFFF, .wf_mode = 0};
 	ac < 2 ? exit(ft_printf("Usage: ./fdf <filename> [ wf_mode ]\n") * 0) : 0;
