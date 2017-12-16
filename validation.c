@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/16 20:46:20 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 22:06:25 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 22:11:49 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_invitation(void)
 |--------------------{white}INSTRUCTIONS{green}--------------------|\n\
 |----------------------------------------------------|\n\
 |                                                    |\n\
-|{nc} {cyan}! U can rotate figure, use {red}WASD{cyan} buttons !           \
+|{nc} {cyan}! U can rotate figure, use {red}WASD{cyan} buttons !          \
 {green}|\n\
 | {cyan}! U can move figure on display, use {red}ARROW KEYS{cyan} !   \
 {green}|\n\
