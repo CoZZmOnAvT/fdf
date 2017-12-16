@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:53:29 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 21:56:23 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 22:02:39 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		main(int ac, char **av)
 	.rx = -45, .ry = 45, .rz = 0,
 	.pivot_x = DEFAULT_CENTER, .pivot_y = DEFAULT_CENTER,
 	.wf_color = 0xFFFFFF, .wf_mode = 0,
-	.zero_c = 0x00FF00, .high_c = 0xFF0000, .low_c = 0x0000FF};	
+	.zero_c = 0x00FF00, .high_c = 0xFF0000, .low_c = 0x0000FF};
 	ft_validate(&fd, ac, av, &env);
 	ft_input(fd, av[1], &plane, &env);
 	ft_add_squads(&plane);
