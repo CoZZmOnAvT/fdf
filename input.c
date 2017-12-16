@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 17:57:31 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 21:24:33 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 21:44:23 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void		ft_clean_trash(char *str, char **tmp)
 	p_t = tmp;
 	ft_memdel((void **)&str);
 	while (*p_t++)
-		ft_memdel((void **)tmp);
-	ft_memdel((void **)&p_t);
+		ft_memdel((void **)p_t);
+	ft_memdel((void **)&tmp);
 }
 
 void		ft_input(int fd, char *filename, t_object *object, t_env *env)
