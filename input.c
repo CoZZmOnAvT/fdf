@@ -6,27 +6,30 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 17:57:31 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 17:59:43 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 21:24:33 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-static intmax_t	ft_count_lines(int *fd, char *filename)
+intmax_t	ft_count_lines(int *fd, char *filename)
 {
 	int		lines;
 	char	*str;
 
 	lines = 0;
 	while (ft_get_next_line(*fd, &str) == 1)
+	{
 		lines++;
+		ft_memdel((void **)&str);
+	}
 	close(*fd);
 	if ((*fd = open(filename, O_RDONLY)) == -1)
 		exit(0);
 	return (lines);
 }
 
-static void		ft_count_points(intmax_t *c, char **row, t_env *env)
+void		ft_count_points(intmax_t *c, char **row, t_env *env)
 {
 	int		h;
 
@@ -41,7 +44,18 @@ static void		ft_count_points(intmax_t *c, char **row, t_env *env)
 	}
 }
 
-void			ft_input(int fd, char *filename, t_object *object, t_env *env)
+void		ft_clean_trash(char *str, char **tmp)
+{
+	char	**p_t;
+
+	p_t = tmp;
+	ft_memdel((void **)&str);
+	while (*p_t++)
+		ft_memdel((void **)tmp);
+	ft_memdel((void **)&p_t);
+}
+
+void		ft_input(int fd, char *filename, t_object *object, t_env *env)
 {
 	char		*str;
 	char		**tmp;
@@ -65,6 +79,7 @@ void			ft_input(int fd, char *filename, t_object *object, t_env *env)
 				xy[1], (s[0] = ft_atoi(tmp[it[1]++])), 0};
 		object->p[it[0]][it[1]] = (t_point){0, 0, 0, -1};
 		xy[1] += (10 * env->scale);
+		ft_clean_trash(str, tmp);
 	}
 	object->p[++it[0]] = NULL;
 }

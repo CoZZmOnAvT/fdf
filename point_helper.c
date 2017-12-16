@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 13:28:19 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 18:04:51 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 20:38:51 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ intmax_t	ft_clalc_height_color(double z, t_env env)
 	else if (z > 0 && env.max_z)
 		z /= env.max_z;
 	if (z < 0)
-		return (ft_g_color(0x00FF00, 0x0000FF, ABS(z)));
-	return (ft_g_color(0x00FF00, 0xFF0000, z));
+		return (ft_g_color(env.zero_c, env.low_c, ABS(z)));
+	return (ft_g_color(env.zero_c, env.high_c, z));
 }
 
 double		ft_p_distance(t_point p1, t_point p2)

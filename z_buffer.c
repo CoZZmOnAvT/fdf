@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:20:18 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 19:43:08 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 20:03:44 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_fill_image(char *img_buff, t_point **z_buff, int *p_d, int d[3])
 				&& z_buff[xy[1]][xy[0]].color != -1 && ++*p_d)
 			{
 				c = (unsigned)z_buff[xy[1]][xy[0]].color;
-				if (!d[1])
+				if (d[1])
 					ft_strrev((char *)&c);
 				ft_memcpy(img_buff + xy[1] * d[0] + xy[0] * 4, &c, 4);
 			}

@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:59:53 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 18:37:31 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 21:26:55 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ typedef struct	s_env
 	char		wf_mode;
 	int			max_z;
 	int			min_z;
+	intmax_t	zero_c;
+	intmax_t	high_c;
+	intmax_t	low_c;
 }				t_env;
 
 typedef struct	s_point
@@ -101,6 +104,12 @@ void			ft_clear_z_buffer(t_point	**z_buff);
 
 void			ft_parse_z_buffer(t_object object, t_point **z_buff, t_env env);
 
+intmax_t		ft_count_lines(int *fd, char *filename);
+
+void			ft_count_points(intmax_t *c, char **row, t_env *env);
+
+void			ft_clean_trash(char *str, char **tmp);
+
 void			ft_input(int fd, char *filename, t_object *object, t_env *env);
 
 void			ft_add_squads(t_object *object);
@@ -138,10 +147,14 @@ int				key_handler(int key, t_rash *t);
 
 int				mouse_handler(int key, int x, int y, t_rash *t);
 
-void			ft_error_handler(char *err);
+void			ft_error_handler(char *err, char *add);
 
 t_squad			*ft_new_squad(t_squad tmp);
 
 t_squad			*ft_push_back_squad(t_squad **dest, t_squad tmp);
+
+void			ft_validate(int *fd, int ac, char **av, t_env *env);
+
+void			ft_invitation(void);
 
 #endif

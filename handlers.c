@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 14:47:48 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 14:47:54 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 20:16:25 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ int		mouse_handler(int key, int x, int y, t_rash *t)
 	return (0);
 }
 
-void	ft_error_handler(char *err)
+void	ft_error_handler(char *err, char *add)
 {
-	perror(err);
+	if (add)
+		ft_printf("%s: %s - %s\n", err, add, strerror(errno));
+	else
+		ft_printf("%s: %s\n", err, strerror(errno));
 	exit(errno);
 }
