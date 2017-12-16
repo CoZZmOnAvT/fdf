@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 14:47:48 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/15 17:16:14 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 14:47:54 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,10 @@ int		mouse_handler(int key, int x, int y, t_rash *t)
 	}
 	e ? ft_parse_z_buffer(*t->plane, t->z_buff, *t->env) : 0;
 	return (0);
+}
+
+void	ft_error_handler(char *err)
+{
+	perror(err);
+	exit(errno);
 }

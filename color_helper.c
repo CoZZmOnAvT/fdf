@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 17:32:17 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/15 12:02:28 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 16:07:32 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ intmax_t	ft_g_color(intmax_t c1, intmax_t c2, double k)
 	t_uchar	g;
 	t_uchar	b;
 
-	b = ft_get_blue(c1) + round(k * (ft_get_blue(c2) - ft_get_blue(c1)));
-	g = ft_get_green(c1) + round(k * (ft_get_green(c2) - ft_get_green(c1)));
-	r = ft_get_red(c1) + round(k * (ft_get_red(c2) - ft_get_red(c1)));
+	b = ft_get_blue(c1) + k * (ft_get_blue(c2) - ft_get_blue(c1));
+	g = ft_get_green(c1) + k * (ft_get_green(c2) - ft_get_green(c1));
+	r = ft_get_red(c1) + k * (ft_get_red(c2) - ft_get_red(c1));
 	return (b + g * 256 + r * 65536);
 }

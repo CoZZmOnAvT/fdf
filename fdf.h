@@ -6,13 +6,15 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:59:53 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/15 22:41:35 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/16 18:37:31 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+# include <stdio.h>
+# include <errno.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <mlx.h>
@@ -56,6 +58,8 @@ typedef struct	s_env
 	double		scale;
 	intmax_t	wf_color;
 	char		wf_mode;
+	int			max_z;
+	int			min_z;
 }				t_env;
 
 typedef struct	s_point
@@ -77,10 +81,11 @@ typedef struct	s_squad
 
 typedef struct	s_object
 {
-	t_squad	*squads;
-	t_point	**p;
-	int		rows;
-	int		cols;
+	t_squad		*squads;
+	t_point		**p;
+	int			rows;
+	int			cols;
+	intmax_t	sd_c;
 }				t_object;
 
 typedef struct	s_trash
@@ -96,7 +101,7 @@ void			ft_clear_z_buffer(t_point	**z_buff);
 
 void			ft_parse_z_buffer(t_object object, t_point **z_buff, t_env env);
 
-void			ft_input(int fd, char *filename, t_object *object, t_env env);
+void			ft_input(int fd, char *filename, t_object *object, t_env *env);
 
 void			ft_add_squads(t_object *object);
 
@@ -123,7 +128,7 @@ double			ft_coef_point(double a, double b, double t);
 
 double			ft_p_distance(t_point p1, t_point p2);
 
-intmax_t		ft_clalc_height_color(double z);
+intmax_t		ft_clalc_height_color(double z, t_env env);
 
 void			ft_recalc_points(t_object *object, t_env env);
 
@@ -132,6 +137,8 @@ void			ft_recalc_squads(t_object object);
 int				key_handler(int key, t_rash *t);
 
 int				mouse_handler(int key, int x, int y, t_rash *t);
+
+void			ft_error_handler(char *err);
 
 t_squad			*ft_new_squad(t_squad tmp);
 
