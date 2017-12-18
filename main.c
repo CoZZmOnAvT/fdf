@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:53:29 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/18 15:15:54 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/18 16:05:51 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		main(int ac, char **av)
 	ft_validate(&fd, ac, av, &env);
 	ft_input(fd, av[1], &plane, &env);
 	ft_add_squads(&plane);
+	ft_printf("\n{green}Data was succesfuly parsed!\n{cyan}Enjoy...{nc}\n");
 	z_buff = ft_init_z_buffer();
 	env.mlx_p = mlx_init();
 	env.win = mlx_new_window(env.mlx_p, env.height, env.width, "FdF");

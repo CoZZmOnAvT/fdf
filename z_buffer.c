@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:20:18 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 22:01:26 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/18 16:05:16 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,28 @@ void	ft_clear_z_buffer(t_point **z_buff)
 void	ft_debug_info(t_object o, t_env e, int p_d)
 {
 	char		*s;
+	time_t		rawtime;
+	char		time_buff[80];
 
-	mlx_string_put(e.mlx_p, e.win, 10, 5, 0X008C00, "FdF - 42");
-	mlx_string_put(e.mlx_p, e.win, 10, 25, 0X008C00, "Author: pgritsen");
-	mlx_string_put(e.mlx_p, e.win, 10, 45, 0X008C00, "Polygons: ");
-	mlx_string_put(e.mlx_p, e.win, 110, 45, 0X008C00, (s = ft_itoa(o.sd_c)));
+	mlx_string_put(e.mlx_p, e.win, 10, 15, 0X008C00, "FdF  -  42");
+	time(&rawtime);
+	strftime(time_buff, 80, "%A  %H:%M", localtime(&rawtime));
+	mlx_string_put(e.mlx_p, e.win, 10, 35, 0X008C00, time_buff);
+	mlx_string_put(e.mlx_p, e.win, 10, 55, 0X008C00, "Author: pgritsen");
+	mlx_string_put(e.mlx_p, e.win, 10, 75, 0X008C00, "Polygons: ");
+	mlx_string_put(e.mlx_p, e.win, 110, 75, 0X008C00, (s = ft_itoa(o.sd_c)));
 	ft_memdel((void **)&s);
-	mlx_string_put(e.mlx_p, e.win, 10, 65, 0X008C00, "Pixels: ");
-	s = p_d
-		? (s = ft_itoa(p_d)) : ft_strdup("nan");
-	mlx_string_put(e.mlx_p, e.win, 90, 65, 0X008C00, s);
+	mlx_string_put(e.mlx_p, e.win, 10, 95, 0X008C00, "Pixels: ");
+	mlx_string_put(e.mlx_p, e.win, 90, 95, 0X008C00, (s = ft_itoa(p_d)));
 	ft_memdel((void **)&s);
-	mlx_string_put(e.mlx_p, e.win, 10, 85, 0X008C00, "Rotate_X: ");
-	mlx_string_put(e.mlx_p, e.win, 120, 85, 0X008C00, (s = ft_itoa(e.rx)));
+	mlx_string_put(e.mlx_p, e.win, 10, 115, 0X008C00, "Rotate_X: ");
+	mlx_string_put(e.mlx_p, e.win, 120, 115, 0X008C00, (s = ft_itoa(e.rx)));
 	ft_memdel((void **)&s);
-	mlx_string_put(e.mlx_p, e.win, 10, 105, 0X008C00, "Rotate_Y: ");
-	mlx_string_put(e.mlx_p, e.win, 120, 105, 0X008C00, (s = ft_itoa(e.ry)));
+	mlx_string_put(e.mlx_p, e.win, 10, 135, 0X008C00, "Rotate_Y: ");
+	mlx_string_put(e.mlx_p, e.win, 120, 135, 0X008C00, (s = ft_itoa(e.ry)));
 	ft_memdel((void **)&s);
-	mlx_string_put(e.mlx_p, e.win, 10, 125, 0X008C00, "Rotate_Z: ");
-	mlx_string_put(e.mlx_p, e.win, 120, 125, 0X008C00, (s = ft_itoa(e.rz)));
+	mlx_string_put(e.mlx_p, e.win, 10, 155, 0X008C00, "Rotate_Z: ");
+	mlx_string_put(e.mlx_p, e.win, 120, 155, 0X008C00, (s = ft_itoa(e.rz)));
 	ft_memdel((void **)&s);
 }
 
@@ -77,7 +80,8 @@ void	ft_fill_image(char *img_buff, t_point **z_buff, int *p_d, int d[3])
 				c = (unsigned)z_buff[xy[1]][xy[0]].color;
 				if (d[1])
 					ft_strrev((char *)&c);
-				ft_memcpy(img_buff + xy[1] * d[0] + xy[0] * 4, &c, 4);
+				ft_memcpy(img_buff + xy[1] * d[0] + xy[0] * d[2] / 8,
+					&c, d[2] / 8);
 			}
 }
 
@@ -89,7 +93,6 @@ void	ft_parse_z_buffer(t_object o, t_point **z_buff, t_env e)
 	void		*img;
 	static int	p_d = 0;
 
-	mlx_clear_window(e.mlx_p, e.win);
 	ft_clear_z_buffer(z_buff);
 	ft_draw_wireframe(o, z_buff, e);
 	!e.wf_mode ? ft_draw_squads(o, z_buff, e) : 0;

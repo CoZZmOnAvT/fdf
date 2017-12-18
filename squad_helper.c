@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 13:52:26 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 16:39:41 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/18 15:51:58 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,17 @@ t_squad		*ft_new_squad(t_squad tmp)
 	return (new);
 }
 
-t_squad		*ft_push_back_squad(t_squad **dest, t_squad tmp)
+t_squad		*ft_push_squad(t_squad **dest, t_squad tmp)
 {
 	t_squad		*new;
-	t_squad		*d_t;
 
 	if (!dest || !(new = ft_new_squad(tmp)))
 		return (NULL);
-	d_t = *dest;
-	while (*dest)
-		dest = &(*dest)->next;
+	if (!*dest)
+		return (*dest = new);
+	new->next = *dest;
 	*dest = new;
-	return (d_t);
+	return (*dest);
 }
 
 void		ft_add_squads(t_object *o)
@@ -49,7 +48,7 @@ void		ft_add_squads(t_object *o)
 		while (o->p[it[0]][++it[1]].color != -1)
 			if (o->p[it[0]][it[1] + 1].color != -1 && o->p[it[0] + 1]
 				&& ++o->sd_c)
-				ft_push_back_squad(&o->squads, (t_squad){o->p[it[0]][it[1]],
+				ft_push_squad(&o->squads, (t_squad){o->p[it[0]][it[1]],
 					o->p[it[0]][it[1] + 1], o->p[it[0] + 1][it[1] + 1],
 					o->p[it[0] + 1][it[1]], NULL});
 }

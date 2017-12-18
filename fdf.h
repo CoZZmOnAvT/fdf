@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 16:59:53 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 21:58:08 by pgritsen         ###   ########.fr       */
+/*   Updated: 2017/12/18 16:00:27 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <mlx.h>
 # include <math.h>
+# include <time.h>
 # include "libft.h"
 
 # define W_WIDTH 1200
@@ -151,7 +152,7 @@ void			ft_error_handler(char *err, char *add);
 
 t_squad			*ft_new_squad(t_squad tmp);
 
-t_squad			*ft_push_back_squad(t_squad **dest, t_squad tmp);
+t_squad			*ft_push_squad(t_squad **dest, t_squad tmp);
 
 void			ft_validate(int *fd, int ac, char **av, t_env *env);
 
