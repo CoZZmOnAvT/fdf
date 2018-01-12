@@ -6,7 +6,7 @@
 /*   By: pgritsen <pgritsen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/12 17:57:31 by pgritsen          #+#    #+#             */
-/*   Updated: 2017/12/16 21:44:23 by pgritsen         ###   ########.fr       */
+/*   Updated: 2018/01/12 13:53:56 by pgritsen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void		ft_count_points(intmax_t *c, char **row, t_env *env)
 
 void		ft_clean_trash(char *str, char **tmp)
 {
-	char	**p_t;
+	int		it;
 
-	p_t = tmp;
 	ft_memdel((void **)&str);
-	while (*p_t++)
-		ft_memdel((void **)p_t);
+	it = -1;
+	while (tmp[++it])
+		ft_memdel((void **)&tmp[it]);
 	ft_memdel((void **)&tmp);
 }
 
